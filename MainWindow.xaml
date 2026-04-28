@@ -1,0 +1,230 @@
+<Window x:Class="StandKnifeLauncher.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        Title="StandKnife Launcher" 
+        Height="680" Width="880"
+        ResizeMode="CanMinimize"
+        WindowStartupLocation="CenterScreen"
+        Background="{DynamicResource MaterialDesignPaper}"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        FontFamily="{DynamicResource MaterialDesignFont}">
+
+    <Window.Resources>
+        <Color x:Key="ColorBg">#1E1E22</Color>
+        <Color x:Key="ColorSurface">#2B2A30</Color>
+        <Color x:Key="ColorBorder">#3E3C45</Color>
+        <Color x:Key="ColorText">#E4E4E7</Color>
+        <Color x:Key="ColorAccent">#D0BFFF</Color>
+        <Color x:Key="ColorAccentText">#1E1E22</Color>
+
+        <SolidColorBrush x:Key="MaterialDesignPaper" Color="{StaticResource ColorBg}" />
+        <SolidColorBrush x:Key="MaterialDesignCardBackground" Color="{StaticResource ColorSurface}" />
+        <SolidColorBrush x:Key="MaterialDesignBody" Color="{StaticResource ColorText}" />
+        <SolidColorBrush x:Key="PrimaryHueMidBrush" Color="{StaticResource ColorAccent}" />
+        <SolidColorBrush x:Key="PrimaryHueMidForegroundBrush" Color="{StaticResource ColorAccentText}" />
+        <SolidColorBrush x:Key="MaterialDesignTextBoxBorder" Color="{StaticResource ColorBorder}" />
+        <SolidColorBrush x:Key="MaterialDesignDivider" Color="{StaticResource ColorBorder}" />
+
+        <Style x:Key="PlayButtonStyle" TargetType="Button" BasedOn="{StaticResource MaterialDesignRaisedButton}">
+            <Setter Property="Background" Value="{DynamicResource PrimaryHueMidBrush}"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#E0D4FF"/>
+                    <Setter Property="Foreground" Value="#1E1E22"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" Value="#A08CFF"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+
+    <materialDesign:DialogHost Identifier="RootDialog">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <Border BorderThickness="0,0,0,1" BorderBrush="{DynamicResource MaterialDesignDivider}" Padding="0,16">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <materialDesign:PackIcon Kind="GamepadVariant" Width="20" Height="20" Foreground="{DynamicResource PrimaryHueMidBrush}" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                    <TextBlock Text="StandKnife Launcher" FontSize="14" FontWeight="Bold" Foreground="{DynamicResource MaterialDesignBody}" VerticalAlignment="Center"/>
+                </StackPanel>
+            </Border>
+
+            <Grid Grid.Row="1" Margin="24">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <StackPanel Grid.Row="0" Margin="0,0,0,24">
+                    <TextBlock Text="УСТРОЙСТВО И ЭЛЕКТРОПИТАНИЕ" FontSize="12" FontWeight="Bold" Foreground="{DynamicResource PrimaryHueMidBrush}" Margin="0,0,0,12"/>
+                    <Border Background="{DynamicResource MaterialDesignCardBackground}" BorderBrush="{DynamicResource MaterialDesignDivider}" BorderThickness="1" CornerRadius="8" Padding="4">
+                        <UniformGrid Columns="2">
+                            <RadioButton x:Name="RadioPC" Content="🖥️ Режим ПК (Максимальная производительность)" GroupName="PowerMode" IsChecked="True" Style="{StaticResource MaterialDesignTabRadioButton}" Height="38"/>
+                            <RadioButton x:Name="RadioLaptop" Content="💻 Ноутбук (Сбалансированный + Power Throttling)" GroupName="PowerMode" Style="{StaticResource MaterialDesignTabRadioButton}" Height="38"/>
+                        </UniformGrid>
+                    </Border>
+                </StackPanel>
+
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="32"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0">
+                        <TextBlock Text="ШАБЛОНЫ НАСТРОЕК" FontSize="12" FontWeight="Bold" Foreground="{DynamicResource PrimaryHueMidBrush}" Margin="0,0,0,16"/>
+
+                        <UniformGrid Columns="2" Rows="2">
+                            <Button x:Name="BtnFastStart" Click="BtnFastStart_Click" Style="{StaticResource MaterialDesignOutlinedButton}" BorderBrush="{DynamicResource MaterialDesignDivider}" Background="{DynamicResource MaterialDesignCardBackground}" Foreground="{DynamicResource MaterialDesignBody}" materialDesign:ButtonAssist.CornerRadius="8" Height="64" Margin="0,0,6,6">
+                                <StackPanel>
+                                    <TextBlock Text="Максимум FPS" FontWeight="SemiBold" FontSize="13" HorizontalAlignment="Center"/>
+                                    <TextBlock Text="DX12 + Приоритет" FontSize="11" Opacity="0.6" HorizontalAlignment="Center" Margin="0,4,0,0"/>
+                                </StackPanel>
+                            </Button>
+                            <Button x:Name="BtnMaxFps" Click="BtnMaxFps_Click" Style="{StaticResource MaterialDesignOutlinedButton}" BorderBrush="{DynamicResource MaterialDesignDivider}" Background="{DynamicResource MaterialDesignCardBackground}" Foreground="{DynamicResource MaterialDesignBody}" materialDesign:ButtonAssist.CornerRadius="8" Height="64" Margin="6,0,0,6">
+                                <StackPanel>
+                                    <TextBlock Text="Без фризов" FontWeight="SemiBold" FontSize="13" HorizontalAlignment="Center"/>
+                                    <TextBlock Text="Только физ. ядра" FontSize="11" Opacity="0.6" HorizontalAlignment="Center" Margin="0,4,0,0"/>
+                                </StackPanel>
+                            </Button>
+                            <Button x:Name="BtnDx12" Click="BtnDx12_Click" Style="{StaticResource MaterialDesignOutlinedButton}" BorderBrush="{DynamicResource MaterialDesignDivider}" Background="{DynamicResource MaterialDesignCardBackground}" Foreground="{DynamicResource MaterialDesignBody}" materialDesign:ButtonAssist.CornerRadius="8" Height="64" Margin="0,6,6,0">
+                                <StackPanel>
+                                    <TextBlock Text="Стандарт" FontWeight="SemiBold" FontSize="13" HorizontalAlignment="Center"/>
+                                    <TextBlock Text="Обычный DX12" FontSize="11" Opacity="0.6" HorizontalAlignment="Center" Margin="0,4,0,0"/>
+                                </StackPanel>
+                            </Button>
+                            <Button x:Name="BtnDx11" Click="BtnDx11_Click" Style="{StaticResource MaterialDesignOutlinedButton}" BorderBrush="{DynamicResource MaterialDesignDivider}" Background="{DynamicResource MaterialDesignCardBackground}" Foreground="{DynamicResource MaterialDesignBody}" materialDesign:ButtonAssist.CornerRadius="8" Height="64" Margin="6,6,0,0">
+                                <StackPanel>
+                                    <TextBlock Text="Слабый ПК" FontWeight="SemiBold" FontSize="13" HorizontalAlignment="Center"/>
+                                    <TextBlock Text="DX11 (совместимость)" FontSize="11" Opacity="0.6" HorizontalAlignment="Center" Margin="0,4,0,0"/>
+                                </StackPanel>
+                            </Button>
+                        </UniformGrid>
+
+                        <TextBlock Text="ПАПКА С ИГРОЙ" FontSize="12" FontWeight="Bold" Foreground="{DynamicResource PrimaryHueMidBrush}" Margin="0,28,0,16"/>
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="8"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBox x:Name="TextGamePath" Style="{StaticResource MaterialDesignOutlinedTextBox}" BorderBrush="{DynamicResource MaterialDesignDivider}" Foreground="{DynamicResource MaterialDesignBody}" Padding="12,10" IsReadOnly="True" Text="C:\Users\ksn\Downloads\StandKnife 3.1\StandKnife.exe"/>
+                            <Button x:Name="BtnBrowse" Grid.Column="2" Click="BtnBrowse_Click" Style="{StaticResource MaterialDesignOutlinedButton}" BorderBrush="{DynamicResource MaterialDesignDivider}" Background="{DynamicResource MaterialDesignCardBackground}" Foreground="{DynamicResource MaterialDesignBody}" Padding="16,0" Height="Auto" materialDesign:ButtonAssist.CornerRadius="8">
+                                <materialDesign:PackIcon Kind="FolderOpen" Width="20" Height="20"/>
+                            </Button>
+                        </Grid>
+                    </StackPanel>
+
+                    <Border Grid.Column="2" Background="{DynamicResource MaterialDesignCardBackground}" BorderBrush="{DynamicResource MaterialDesignDivider}" BorderThickness="1" CornerRadius="10" Padding="20">
+                        <StackPanel>
+                            <TextBlock Text="СВОИ НАСТРОЙКИ" FontSize="12" FontWeight="Bold" Foreground="{DynamicResource PrimaryHueMidBrush}" Margin="0,0,0,16"/>
+
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="12"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="12"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <StackPanel Grid.Row="0" Grid.Column="0">
+                                    <TextBlock Text="Версия DirectX" FontSize="11" Opacity="0.6" Margin="0,0,0,6"/>
+                                    <ComboBox x:Name="ComboApi" Style="{StaticResource MaterialDesignOutlinedComboBox}" BorderBrush="{DynamicResource MaterialDesignDivider}">
+                                        <ComboBoxItem Content="DirectX 12" IsSelected="True"/>
+                                        <ComboBoxItem Content="DirectX 11"/>
+                                        <ComboBoxItem Content="По умолчанию"/>
+                                    </ComboBox>
+                                </StackPanel>
+
+                                <StackPanel Grid.Row="0" Grid.Column="2">
+                                    <TextBlock Text="Разрешение экрана" FontSize="11" Opacity="0.6" Margin="0,0,0,6"/>
+                                    <ComboBox x:Name="ComboResolution" Style="{StaticResource MaterialDesignOutlinedComboBox}" BorderBrush="{DynamicResource MaterialDesignDivider}">
+                                        <ComboBoxItem Content="1920x1080 (Full HD)" IsSelected="True"/>
+                                        <ComboBoxItem Content="1280x720 (HD)"/>
+                                        <ComboBoxItem Content="Нативное"/>
+                                    </ComboBox>
+                                </StackPanel>
+
+                                <StackPanel Grid.Row="2" Grid.Column="0">
+                                    <TextBlock Text="Качество графики" FontSize="11" Opacity="0.6" Margin="0,0,0,6"/>
+                                    <ComboBox x:Name="ComboQuality" Style="{StaticResource MaterialDesignOutlinedComboBox}" BorderBrush="{DynamicResource MaterialDesignDivider}">
+                                        <ComboBoxItem Content="Минимальное"/>
+                                        <ComboBoxItem Content="Низкое"/>
+                                        <ComboBoxItem Content="Простое"/>
+                                        <ComboBoxItem Content="Хорошее" IsSelected="True"/>
+                                        <ComboBoxItem Content="Красивое"/>
+                                        <ComboBoxItem Content="Фантастическое"/>
+                                    </ComboBox>
+                                </StackPanel>
+
+                                <StackPanel Grid.Row="2" Grid.Column="2">
+                                    <TextBlock Text="Режим процессора" FontSize="11" Opacity="0.6" Margin="0,0,0,6"/>
+                                    <ComboBox x:Name="ComboCpu" Style="{StaticResource MaterialDesignOutlinedComboBox}" BorderBrush="{DynamicResource MaterialDesignDivider}">
+                                        <ComboBoxItem Content="Все ядра" IsSelected="True"/>
+                                        <ComboBoxItem Content="Только физ. ядра"/>
+                                    </ComboBox>
+                                </StackPanel>
+                            </Grid>
+
+                            <Separator Background="{DynamicResource MaterialDesignDivider}" Margin="0,16,0,16"/>
+
+                            <StackPanel>
+                                <CheckBox x:Name="CheckPriority" Content="Дать игре высокий приоритет" IsChecked="True" Margin="0,0,0,10"/>
+                                <CheckBox x:Name="CheckNoLog" Content="Выключить логи (повышает FPS)" IsChecked="True" Margin="0,0,0,10"/>
+                                <CheckBox x:Name="CheckSingleInstance" Content="Запретить запуск в несколько окон" IsChecked="True" Margin="0,0,0,10"/>
+
+                                <DockPanel LastChildFill="False" Margin="0,0,0,16">
+                                    <CheckBox x:Name="CheckCustomPower" Content="Использовать мой игровой режим питания" IsChecked="True" DockPanel.Dock="Left"/>
+                                    <Button Click="BtnDeletePlan_Click" Style="{StaticResource MaterialDesignFlatButton}" 
+                Padding="0" Margin="8,0,0,0" ToolTip="Удалить игровой режим"
+                Width="24" Height="24" DockPanel.Dock="Left">
+                                        <materialDesign:PackIcon Kind="Delete" Foreground="#D0BFFF" Width="18" Height="18"/>
+                                    </Button>
+                                </DockPanel>
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+            </Grid>
+
+            <Border Grid.Row="2" BorderBrush="{DynamicResource MaterialDesignDivider}" BorderThickness="0,1,0,0" Padding="24,16" Background="{DynamicResource MaterialDesignPaper}">
+                <Grid>
+                    <Button x:Name="BtnSave" Click="BtnSave_Click" Style="{StaticResource MaterialDesignFlatButton}" Foreground="{DynamicResource MaterialDesignBody}" Opacity="0.7" HorizontalAlignment="Left" Padding="12,8">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="ContentSave" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                            <TextBlock Text="СОХРАНИТЬ" VerticalAlignment="Center" FontWeight="SemiBold"/>
+                        </StackPanel>
+                    </Button>
+
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <Button x:Name="BtnLaunch" Click="BtnLaunch_Click" Style="{StaticResource MaterialDesignOutlinedButton}" BorderBrush="{DynamicResource MaterialDesignDivider}" Background="{DynamicResource MaterialDesignCardBackground}" Foreground="{DynamicResource MaterialDesignBody}" Margin="0,0,16,0" Padding="24,8" Height="42" materialDesign:ButtonAssist.CornerRadius="8">
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="PlayOutline" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                                <TextBlock Text="СТАНДАРТНЫЙ ВХОД" VerticalAlignment="Center" FontWeight="SemiBold"/>
+                            </StackPanel>
+                        </Button>
+
+                        <Button x:Name="BtnLaunchQuick" Click="BtnLaunchQuick_Click" Style="{StaticResource PlayButtonStyle}" BorderThickness="0" Padding="32,8" Height="42" materialDesign:ButtonAssist.CornerRadius="8">
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="RocketLaunch" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                                <TextBlock Text="ИГРАТЬ С НАСТРОЙКАМИ" FontWeight="Bold" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
+                </Grid>
+            </Border>
+        </Grid>
+    </materialDesign:DialogHost>
+</Window>
